@@ -41,7 +41,7 @@ class Backpack:
 
 
 def main() -> None:
-    file_reader = FileReader('resources/input.txt')
+    file_reader = FileReader("resources/input.txt")
     elf_list = file_reader.parse()
     print("Max elf holding: {}".format(max(elf_list)))
     print("Top 3 elves holding: {}".format(sum(sorted(elf_list)[-3:])))
