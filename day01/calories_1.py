@@ -29,10 +29,7 @@ def top_elf_calories(input_file: str='input.txt') -> int:
     df['elf'] = df['elf'].fillna(method='bfill').astype(np.int64)
     df = df[df['calories'] >= 0]
 
-    # count the calories per elf
-    sum_df = df.groupby('elf').sum('calories').reset_index()
-    
-    # return the most calories per elf
+    # return the most total calories per elf
     return df.groupby('elf').sum('calories').max().values[0]
 
 if __name__ == "__main__":

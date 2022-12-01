@@ -29,9 +29,6 @@ def top_k_elves_calories(input_file: str='input.txt', k: int=3) -> int:
     df['elf'] = df['elf'].fillna(method='bfill').astype(np.int64)
     df = df[df['calories'] >= 0]
 
-    # count the calories per elf
-    sum_df = df.groupby('elf').sum('calories').reset_index()
-    
     # return the total calories per the top k elves
     return df.groupby('elf').sum('calories').sort_values('calories', ascending=False)['calories'].values[:k].sum()
 
