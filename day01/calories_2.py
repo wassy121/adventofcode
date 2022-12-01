@@ -36,10 +36,10 @@ def top_k_elves_calories(input_file: str='input.txt', k: int=3) -> int:
     return df.groupby('elf').sum('calories').sort_values('calories', ascending=False)['calories'].values[:k].sum()
 
 if __name__ == "__main__":
-    if len(sys.argv) > 1:
-        total = top_k_elves_calories(sys.argv[1])
     if len(sys.argv) > 2:
         total = top_k_elves_calories(sys.argv[1], int(sys.argv[2]))
+    elif len(sys.argv) > 1:
+        total = top_k_elves_calories(sys.argv[1])
     else:
         total = top_k_elves_calories()
 
