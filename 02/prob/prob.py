@@ -14,16 +14,6 @@ move_map = {
     "Z": "scissors",
 }
 
-strategy_map = {
-    "A": 1, # rock
-    "B": 2, # paper
-    "C": 3, # scissors
-    "X": 0, # lose
-    "Y": 3, # draw
-    "Z": 6, # win
-}
-
-
 
 class FileReader:
     file_name = "input.txt"
@@ -47,65 +37,64 @@ class RPSFight:
     player1_score = 0
     player2_score = 0
 
-    def playGame(self, move1, move2):
-        # self.player1_score += self.getRoundScore(move_map[move1], move_map[move2])
-        # self.player2_score += self.getRoundScore(move_map[move2], move_map[move1])
-        self.player2_score += self.getStrategyScore(move1, move2)
+    def playGame(self, move1: str, move2: str) -> None:
+        # first problem had different criteria
+        #self.player1_score += self.getRoundScore(move_map[move1], move_map[move2])
+        #self.player2_score += self.getRoundScore(move_map[move2], move_map[move1])
+        self.player2_score += self.getStrategyScore(move_map[move1], move_map[move2])
 
     def getStrategyScore(self, their_move: str, my_outcome: str) -> int:
         # pdb.set_trace()
 
-        if their_move == "A":
-            if my_outcome == "X": # lose
-                return self.getRoundScore("Z", their_move)
-            elif my_outcome == "Y": # draw
-                return self.getRoundScore("X", their_move)
-            elif my_outcome == "Z": # win
-                return self.getRoundScore("Y", their_move)
-        if their_move == "B":
-            if my_outcome == "X": # lose
-                return self.getRoundScore("X", their_move)
-            elif my_outcome == "Y": # draw
-                return self.getRoundScore("Y", their_move)
-            elif my_outcome == "Z": # win
-                return self.getRoundScore("Z", their_move)
-        if their_move == "C":
-            if my_outcome == "X": # lose
-                return self.getRoundScore("Y", their_move)
-            elif my_outcome == "Y": # draw
-                return self.getRoundScore("Z", their_move)
-            elif my_outcome == "Z": # win
-                return self.getRoundScore("X", their_move)
+        if their_move == "rock":
+            if my_outcome == "rock":  # lose
+                return self.getRoundScore("scissors", their_move)
+            elif my_outcome == "paper":  # draw
+                return self.getRoundScore("rock", their_move)
+            elif my_outcome == "scissors":  # win
+                return self.getRoundScore("paper", their_move)
+        if their_move == "paper":
+            if my_outcome == "rock":  # lose
+                return self.getRoundScore("rock", their_move)
+            elif my_outcome == "paper":  # draw
+                return self.getRoundScore("paper", their_move)
+            elif my_outcome == "scissors":  # win
+                return self.getRoundScore("scissors", their_move)
+        if their_move == "scissors":
+            if my_outcome == "rock":  # lose
+                return self.getRoundScore("paper", their_move)
+            elif my_outcome == "paper":  # draw
+                return self.getRoundScore("scissors", their_move)
+            elif my_outcome == "scissors":  # win
+                return self.getRoundScore("rock", their_move)
 
-
-
-    def getRoundScore(self, my_move, their_move) -> int:
+    def getRoundScore(self, my_move: str, their_move: str) -> int:
         # pdb.set_trace()
         round_score = 0
-        if move_map[my_move] == "rock":
+        if my_move == "rock":
             round_score += 1
-        elif move_map[my_move] == "paper":
+        elif my_move == "paper":
             round_score += 2
-        elif move_map[my_move] == "scissors":
+        elif my_move == "scissors":
             round_score += 3
 
         # there is surely a sneakier way to do this
-        if move_map[my_move] == move_map[their_move]:  # draw
+        if my_move == their_move:  # draw
             round_score += 3
-        elif move_map[my_move] == "rock":
-            if move_map[their_move] == "scissors":  # win
+        elif my_move == "rock":
+            if their_move == "scissors":  # win
                 round_score += 6
-            elif move_map[their_move] == "paper":  # loss
+            elif their_move == "paper":  # loss
                 round_score += 0
-        elif move_map[my_move] == "scissors":
-            if move_map[their_move] == "rock":  # loss
+        elif my_move == "scissors":
+            if their_move == "rock":  # loss
                 round_score += 0
-            elif move_map[their_move] == "paper":  # win
+            elif their_move == "paper":  # win
                 round_score += 6
-        elif move_map[my_move] == "paper":
-            if move_map[their_move] == "rock":  # win
+        elif my_move == "paper":
+            if their_move == "rock":  # win
                 round_score += 6
-            elif move_map[their_move] == "scissors":  # loss
+            elif their_move == "scissors":  # loss
                 round_score += 0
 
         return round_score
