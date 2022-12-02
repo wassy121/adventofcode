@@ -23,7 +23,8 @@ strategy_map = {
     "Y": "draw",
     "Z": "win",
 }
-losers = ['RS', 'PR', 'SP']
+losers = ["RS", "PR", "SP"]
+winners = ["RP", "PS", "SR"]
 
 
 class FileReader:
@@ -58,27 +59,17 @@ class RPSFight:
 
     def getStrategyScore(self, their_move: str, my_outcome: str) -> int:
 
-        if their_move == "R":
-            if my_outcome == "lose":
-                return self.getRoundScore("S", their_move)
-            elif my_outcome == "draw":
-                return self.getRoundScore("R", their_move)
-            elif my_outcome == "win":
-                return self.getRoundScore("P", their_move)
-        if their_move == "P":
-            if my_outcome == "lose":
-                return self.getRoundScore("R", their_move)
-            elif my_outcome == "draw":
-                return self.getRoundScore("P", their_move)
-            elif my_outcome == "win":
-                return self.getRoundScore("S", their_move)
-        if their_move == "S":
-            if my_outcome == "lose":
-                return self.getRoundScore("P", their_move)
-            elif my_outcome == "draw":
-                return self.getRoundScore("S", their_move)
-            elif my_outcome == "win":
-                return self.getRoundScore("R", their_move)
+        # pdb.set_trace()
+        if my_outcome == "lose":
+            search_array = losers
+        elif my_outcome == "win":
+            search_array = winners
+        if my_outcome == "draw":
+            return self.getRoundScore(their_move, their_move)
+        else:
+            moves = [i for i in search_array if i[0] == their_move][0]
+            # their move is first in the array pairing, so the function argument order is weird
+            return self.getRoundScore(moves[1:], moves[:1])
 
     def getRoundScore(self, my_move: str, their_move: str) -> int:
         round_score = 0
@@ -89,13 +80,12 @@ class RPSFight:
         elif my_move == "S":
             round_score += 3
 
-        # there is surely a sneakier way to do this
         if my_move == their_move:  # draw
             round_score += 3
-        elif my_move + their_move in losers:
-            round_score += 6
-        else: # win
+        elif their_move + my_move in losers:
             round_score += 0
+        else:  # win
+            round_score += 6
 
         return round_score
 
