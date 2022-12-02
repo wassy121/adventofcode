@@ -6,13 +6,24 @@ import os
 import typing
 
 move_map = {
-    "A": "rock",
-    "B": "paper",
-    "C": "scissors",
-    "X": "rock",
-    "Y": "paper",
-    "Z": "scissors",
+    "A": "R",
+    "B": "P",
+    "C": "S",
+    "X": "R",
+    "Y": "P",
+    "Z": "S",
 }
+updated_move_map = {
+    "A": "R",
+    "B": "P",
+    "C": "S",
+}
+strategy_map = {
+    "X": "lose",
+    "Y": "draw",
+    "Z": "win",
+}
+losers = ['RS', 'PR', 'SP']
 
 
 class FileReader:
@@ -39,63 +50,52 @@ class RPSFight:
 
     def playGame(self, move1: str, move2: str) -> None:
         # first problem had different criteria
-        #self.player1_score += self.getRoundScore(move_map[move1], move_map[move2])
-        #self.player2_score += self.getRoundScore(move_map[move2], move_map[move1])
-        self.player2_score += self.getStrategyScore(move_map[move1], move_map[move2])
+        # self.player1_score += self.getRoundScore(move_map[move1], move_map[move2])
+        # self.player2_score += self.getRoundScore(move_map[move2], move_map[move1])
+        self.player2_score += self.getStrategyScore(
+            updated_move_map[move1], strategy_map[move2]
+        )
 
     def getStrategyScore(self, their_move: str, my_outcome: str) -> int:
-        # pdb.set_trace()
 
-        if their_move == "rock":
-            if my_outcome == "rock":  # lose
-                return self.getRoundScore("scissors", their_move)
-            elif my_outcome == "paper":  # draw
-                return self.getRoundScore("rock", their_move)
-            elif my_outcome == "scissors":  # win
-                return self.getRoundScore("paper", their_move)
-        if their_move == "paper":
-            if my_outcome == "rock":  # lose
-                return self.getRoundScore("rock", their_move)
-            elif my_outcome == "paper":  # draw
-                return self.getRoundScore("paper", their_move)
-            elif my_outcome == "scissors":  # win
-                return self.getRoundScore("scissors", their_move)
-        if their_move == "scissors":
-            if my_outcome == "rock":  # lose
-                return self.getRoundScore("paper", their_move)
-            elif my_outcome == "paper":  # draw
-                return self.getRoundScore("scissors", their_move)
-            elif my_outcome == "scissors":  # win
-                return self.getRoundScore("rock", their_move)
+        if their_move == "R":
+            if my_outcome == "lose":
+                return self.getRoundScore("S", their_move)
+            elif my_outcome == "draw":
+                return self.getRoundScore("R", their_move)
+            elif my_outcome == "win":
+                return self.getRoundScore("P", their_move)
+        if their_move == "P":
+            if my_outcome == "lose":
+                return self.getRoundScore("R", their_move)
+            elif my_outcome == "draw":
+                return self.getRoundScore("P", their_move)
+            elif my_outcome == "win":
+                return self.getRoundScore("S", their_move)
+        if their_move == "S":
+            if my_outcome == "lose":
+                return self.getRoundScore("P", their_move)
+            elif my_outcome == "draw":
+                return self.getRoundScore("S", their_move)
+            elif my_outcome == "win":
+                return self.getRoundScore("R", their_move)
 
     def getRoundScore(self, my_move: str, their_move: str) -> int:
-        # pdb.set_trace()
         round_score = 0
-        if my_move == "rock":
+        if my_move == "R":
             round_score += 1
-        elif my_move == "paper":
+        elif my_move == "P":
             round_score += 2
-        elif my_move == "scissors":
+        elif my_move == "S":
             round_score += 3
 
         # there is surely a sneakier way to do this
         if my_move == their_move:  # draw
             round_score += 3
-        elif my_move == "rock":
-            if their_move == "scissors":  # win
-                round_score += 6
-            elif their_move == "paper":  # loss
-                round_score += 0
-        elif my_move == "scissors":
-            if their_move == "rock":  # loss
-                round_score += 0
-            elif their_move == "paper":  # win
-                round_score += 6
-        elif my_move == "paper":
-            if their_move == "rock":  # win
-                round_score += 6
-            elif their_move == "scissors":  # loss
-                round_score += 0
+        elif my_move + their_move in losers:
+            round_score += 6
+        else: # win
+            round_score += 0
 
         return round_score
 
