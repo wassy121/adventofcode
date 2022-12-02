@@ -67,9 +67,13 @@ class RPSFight:
         if my_outcome == "draw":
             return self.getRoundScore(their_move, their_move)
         else:
-            moves = [i for i in search_array if i[0] == their_move][0]
-            # their move is first in the array pairing, so the function argument order is weird
-            return self.getRoundScore(moves[1:], moves[:1])
+            # moves = [i for i in search_array if i[0] == their_move][0]
+            # return self.getRoundScore(moves[1:], their_move)
+            #
+            # not sure whether I like above or below better. Overly-clever code reduces maintainability
+            for moves in search_array:
+                if moves[0] == their_move:
+                    return self.getRoundScore(moves[1:], their_move)
 
     def getRoundScore(self, my_move: str, their_move: str) -> int:
         round_score = 0
