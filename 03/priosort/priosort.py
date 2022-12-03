@@ -25,13 +25,13 @@ class Rucksack:
         ]
         return list(set(first_half) & set(second_half))[0]  # there should be only 1
 
-    def getDuplicates(self):
+    def getDuplicates(self) -> typing.List[str]:
         duplicates = []
         for sack in self.sack_contents:
             duplicates.append(self.findDuplicate(sack))
         return duplicates
 
-    def getBadges(self):
+    def getBadges(self) -> typing.List[str]:
         sack_group = []
         badges = []
         for index, sack in enumerate(self.sack_contents):
@@ -39,9 +39,7 @@ class Rucksack:
             if (index + 1) % 3 == 0 and index != 0:
                 badges += list(
                     set(sack_group[0]) & set(sack_group[1]) & set(sack_group[2])
-                )[
-                    0
-                ]  # there should be only 1
+                )[0]
                 sack_group = []
 
         return badges
