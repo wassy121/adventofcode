@@ -19,10 +19,10 @@ class Rucksack:
                 self.sack_contents.append(line.strip())
 
     def findDuplicate(self, sack: str) -> str:
-        first_half  = sack[slice(0             , len(sack) // 2)]
-        second_half = sack[len(sack)//2 if len(sack)%2 == 0
-                                                 else ((len(sack)//2)+1):]
-        #pdb.set_trace()
+        first_half = sack[slice(0, len(sack) // 2)]
+        second_half = sack[
+            len(sack) // 2 if len(sack) % 2 == 0 else ((len(sack) // 2) + 1) :
+        ]
         return list(set(first_half) & set(second_half))[0]  # there should be only 1
 
     def getDuplicates(self):
@@ -31,16 +31,35 @@ class Rucksack:
             duplicates.append(self.findDuplicate(sack))
         return duplicates
 
+    def getBadges(self):
+        sack_group = []
+        badges = []
+        for index, sack in enumerate(self.sack_contents):
+            sack_group.append(sack)
+            if (index + 1) % 3 == 0 and index != 0:
+                badges += list(
+                    set(sack_group[0]) & set(sack_group[1]) & set(sack_group[2])
+                )[
+                    0
+                ]  # there should be only 1
+                sack_group = []
+
+        return badges
+
 
 def main() -> None:
     rucksack = Rucksack("resources/input.txt")
 
     final_score = 0
+    badge_score = 0
     duplicates = Rucksack.getDuplicates(rucksack)
-    # duplicates.sort()
     for dupe in duplicates:
-        final_score += scores.index(dupe) + 1 # 0-indexed arrays
-    print (final_score)
+        final_score += scores.index(dupe) + 1  # 0-indexed arrays
+    print("duplicate score: {}".format(final_score))
+    badges = Rucksack.getBadges(rucksack)
+    for badge in badges:
+        badge_score += scores.index(badge) + 1  # 0-indexed arrays
+    print("badge score: {}".format(badge_score))
 
 
 if __name__ == "__main__":
