@@ -23,7 +23,9 @@ class Rucksack:
         second_half = sack[
             len(sack) // 2 if len(sack) % 2 == 0 else ((len(sack) // 2) + 1) :
         ]
-        return list(set(first_half) & set(second_half))[0]  # there should be only 1
+        duplicates = set(first_half) & set(second_half) 
+        assert len(duplicates) == 1
+        return duplicates[0]
 
     def getDuplicates(self) -> typing.List[str]:
         duplicates = []
