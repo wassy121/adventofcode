@@ -23,7 +23,7 @@ class Rucksack:
         second_half = sack[
             len(sack) // 2 if len(sack) % 2 == 0 else ((len(sack) // 2) + 1) :
         ]
-        duplicates = set(first_half) & set(second_half) 
+        duplicates = list(set(first_half) & set(second_half))
         assert len(duplicates) == 1
         return duplicates[0]
 
