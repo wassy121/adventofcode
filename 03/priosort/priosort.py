@@ -7,7 +7,7 @@ import string
 import typing
 
 
-scores = list(string.ascii_letters)
+scores = [0] + list(string.ascii_letters)
 
 
 class Rucksack:
@@ -52,16 +52,17 @@ class Rucksack:
 def main() -> None:
     rucksack = Rucksack("resources/input.txt")
 
-    final_score = 0
-    badge_score = 0
+    duplicate_priorities = 0
     duplicates = Rucksack.getDuplicates(rucksack)
     for dupe in duplicates:
-        final_score += scores.index(dupe) + 1  # 0-indexed arrays
-    print("duplicate score: {}".format(final_score))
+        duplicate_priorities += scores.index(dupe)
+    print("duplicate score: {}".format(duplicate_priorities))
+
+    badge_priorities = 0
     badges = Rucksack.getBadges(rucksack)
     for badge in badges:
-        badge_score += scores.index(badge) + 1  # 0-indexed arrays
-    print("badge score: {}".format(badge_score))
+        badge_priorities += scores.index(badge)
+    print("badge score: {}".format(badge_priorities))
 
 
 if __name__ == "__main__":
