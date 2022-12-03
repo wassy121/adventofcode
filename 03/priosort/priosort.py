@@ -39,9 +39,11 @@ class Rucksack:
         for index, sack in enumerate(self.sack_contents):
             sack_group.append(sack)
             if (index + 1) % 3 == 0 and index != 0:
-                badges += list(
+                group_badges = list(
                     set(sack_group[0]) & set(sack_group[1]) & set(sack_group[2])
                 )[0]
+                assert len(group_badges) == 1
+                badges += group_badges[0]
                 sack_group = []
 
         return badges
