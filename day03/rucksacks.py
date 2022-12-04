@@ -23,7 +23,7 @@ def sum_error_priorities(rucksacks: List[str]) -> int:
 def find_badge(group: Tuple[str]) -> str:
     return [item for item in set.intersection(*map(set, group))][0]
 
-def find_badges(rucksacks: List[str]) -> List[int]:
+def find_badges(rucksacks: List[str]) -> List[str]:
     return [find_badge(group) for group in [*zip(*[iter(rucksacks)]*3)]]
 
 def sum_badge_priorities(rucksacks: List[str]) -> int:
