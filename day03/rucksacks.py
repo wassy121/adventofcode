@@ -2,11 +2,11 @@
 
 import sys
 
-from string import ascii_lowercase as lowercase, ascii_uppercase as uppercase
+from string import ascii_letters as letters
 
 from typing import *
 
-priorities = {k: v for k, v in zip(lowercase + uppercase, range(1, 53))}
+priorities = {k: v for k, v in zip(letters, range(1, 53))}
 
 def find_error(rucksack: str) -> str:
     half = len(rucksack)//2
