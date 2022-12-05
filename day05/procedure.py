@@ -3,7 +3,6 @@
 import sys
 
 from typing import *
-from typing import *
 
 import re
 
