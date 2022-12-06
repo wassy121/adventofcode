@@ -4,12 +4,16 @@ import sys
 
 from typing import *
 
+import re
+
+assignment_pattern = re.compile(r'^(\d+)-(\d+),(\d+)-(\d+)$')
+
 def load_pairs(input_file: str='input.txt') -> List[str]:
     with open(input_file, 'r') as fp:
         return [line.strip() for line in fp.readlines()]
 
 def containment(pair: str) -> bool:
-    assignments = [int(assignment) for string in pair.split(',') for assignment in string.split('-')]
+    assignments = [int(endpoint) for assignment in assignment_pattern.findall(pair) for endpoint in assignment]
     contains = (assignments[0] <= assignments[2]) & (assignments[1] >= assignments[3])
     contained_by = (assignments[0] >= assignments[2]) & (assignments[1] <= assignments[3])
     return contains | contained_by
@@ -19,7 +23,7 @@ def count_containments(pairs: List[str]) -> int:
     return sum(containments) 
 
 def overlap(pair: str) -> bool:
-    assignments = [int(assignment) for string in pair.split(',') for assignment in string.split('-')]
+    assignments = [int(endpoint) for assignment in assignment_pattern.findall(pair) for endpoint in assignment]
     return (assignments[0] <= assignments[3]) & (assignments[1] >= assignments[2])
     
 def count_overlaps(pairs: List[str]) -> int:
@@ -34,5 +38,5 @@ if __name__ == "__main__":
         pairs = load_pairs()
 
     print(f'Number of assignment containments: {count_containments(pairs)}')
-    print(f'Number of assignment overlaps: {count_overlaps(pairs)}')
+    print(f'Number of assignment overlaps:     {count_overlaps(pairs)}')
 
