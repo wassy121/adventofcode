@@ -11,7 +11,7 @@ def load_signal(input_file: str='input.txt') -> str:
         return fp.readline().strip()
 
 def get_start(signal: str, width: int) -> int:
-    generator = (index + width for index, window in enumerate(windowed(signal, width)) if len(set(window)) == width)
+    generator = (index for index, window in enumerate(windowed(signal, width), width) if len(set(window)) == width)
     return next(generator, 0) # return first occurence
 
 def get_packet_start(signal: str) -> int:
