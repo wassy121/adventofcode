@@ -7,7 +7,7 @@ from typing import *
 import numpy as np
 import pandas as pd
 
-def top_k_elves_calories(input_file: str='input.txt', k: int=3) -> int:
+def parse_input(input_file: str) -> pd.DataFrame:
     # load file, preserving blank separator rows
     with open(input_file, 'r') as fp:
         lines = [line.strip() for line in fp.readlines()]
@@ -29,16 +29,31 @@ def top_k_elves_calories(input_file: str='input.txt', k: int=3) -> int:
     df['elf'] = df['elf'].fillna(method='bfill').astype(np.int64)
     df = df[df['calories'] >= 0]
 
+    return df
+
+def top_elf_calories(input_file: str='input.txt') -> int:
+    df = parse_input(input_file)
+
+    # return the most total calories per elf
+    return df.groupby('elf').sum('calories').max().values[0]
+
+def top_k_elves_calories(input_file: str='input.txt', k: int=3) -> int:
+    df = parse_input(input_file)
+
     # return the total calories per the top k elves
     return df.groupby('elf').sum('calories').sort_values('calories', ascending=False)['calories'].values[:k].sum()
 
+
 if __name__ == "__main__":
     if len(sys.argv) > 2:
-        total = top_k_elves_calories(sys.argv[1], int(sys.argv[2]))
+        top_calories = top_elf_calories(sys.argv[1])
+        top_k_calories = top_k_elves_calories(sys.argv[1], int(sys.argv[2]))
     elif len(sys.argv) > 1:
-        total = top_k_elves_calories(sys.argv[1])
+        top_calories = top_elf_calories(sys.argv[1])
+        top_k_calories = top_k_elves_calories(sys.argv[1])
     else:
-        total = top_k_elves_calories()
+        top_calories = top_elf_calories()
+        top_k_calories = top_k_elves_calories()
 
-    print(total)
-
+    print(f'Total calories for top elf:     {top_calories}')
+    print(f'Total calories for top k elves: {top_k_calories}')
