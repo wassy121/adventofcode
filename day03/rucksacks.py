@@ -11,7 +11,8 @@ priorities = {k: v for k, v in zip(letters, range(1, 53))}
 def find_error(rucksack: str) -> str:
     half = len(rucksack)//2
     compartments = [rucksack[:half], rucksack[half:]]
-    return [item for item in set.intersection(*map(set, compartments))][0]
+    generator = (item for item in set.intersection(*map(set, compartments)))
+    return next(generator) # return first occurrence
 
 def find_errors(rucksacks: List[str]) -> List[str]:
     return [find_error(rucksack) for rucksack in rucksacks]
@@ -21,7 +22,8 @@ def sum_error_priorities(rucksacks: List[str]) -> int:
     return sum(priority_list) 
 
 def find_badge(group: Tuple[str]) -> str:
-    return [item for item in set.intersection(*map(set, group))][0]
+    generator = (item for item in set.intersection(*map(set, group)))
+    return next(generator) # return first occurrence
 
 def find_badges(rucksacks: List[str]) -> List[str]:
     return [find_badge(group) for group in [*zip(*[iter(rucksacks)]*3)]]
