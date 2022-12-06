@@ -21,13 +21,14 @@ def get_stacks(levels: List[str]) -> List[List[str]]:
     return stacks
 
 def get_moves(procedures: List[str]) -> List[Tuple[int, int, int]]:
-    return [(*map(int, move_pattern.findall(procedure)[0]),) for procedure in procedures]
+    return [(*map(int, move_pattern.match(procedure).groups()),) for procedure in procedures]
 
 def parse_input(input_file: str) -> Tuple[List[List[str]], List[Tuple[int, int, int]]]:
     with open(input_file, 'r') as fp:
         lines = fp.readlines() # no stripping due to parsing below
     
-    blank_index = [index for index, line in enumerate(lines) if not line.strip()][0]
+    blank_generator = (index for index, line in enumerate(lines) if not line.strip())
+    blank_index = next(blank_generator)
     
     levels = lines[:blank_index]
     stacks = get_stacks(levels)
