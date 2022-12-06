@@ -20,11 +20,6 @@ def get_packet_start(signal: str) -> int:
 def get_message_start(signal: str) -> int:
     return get_start(signal, width=14)
 
-signal = load_signal()
-
-get_packet_start(signal)
-get_message_start(signal)
-
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
