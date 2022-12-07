@@ -34,10 +34,23 @@ class Stacker:
                 self.stacks[int(to_stack)] += temp_stack
 
 
+    def applyBetterMoves(self, file_name: str = "resources/moves.txt") -> typing.List[str]:
+        with open(file_name, "r") as input_file:
+            for line in input_file:
+                num_to_move = line.split()[1]
+                from_stack = line.split()[3]
+                to_stack = line.split()[5]
+                #pdb.set_trace()
+                temp_stack = self.stacks[int(from_stack)][-int(num_to_move):]
+                del(self.stacks[int(from_stack)][-int(num_to_move):])
+                self.stacks[int(to_stack)] += temp_stack
+
+
 
 def main() -> None:
     stacker = Stacker() #"resources/test/starting_stack_arranged.txt")
-    stacker.applyMoves() #"resources/test/moves.txt")
+    #stacker.applyMoves() #"resources/test/moves.txt")
+    stacker.applyBetterMoves() #"resources/test/moves.txt")
     print(stacker.stacks)
 
 if __name__ == "__main__":
