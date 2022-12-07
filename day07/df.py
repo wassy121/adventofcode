@@ -37,7 +37,6 @@ def traverse(input_file: str='input.txt') -> DefaultDict[str, int]:
 def du_s(files: DefaultDict[str, int]) -> DefaultDict[str, int]:
     directories = [directory for directory, size in files.items() if size == 0]
 
-    #[for directory in directories for file, size in files.items() if file.startswith(directory)]
     dictionary = {directory: sum([size for file, size in files.items() if file.startswith(directory)]) for directory in directories}
 
     return DefaultDict(lambda : 0, dictionary)
