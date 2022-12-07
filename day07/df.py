@@ -39,7 +39,7 @@ def du_s(files: DefaultDict[str, int]) -> DefaultDict[str, int]:
 
     dictionary = {directory: sum([size for file, size in files.items() if file.startswith(directory)]) for directory in directories}
 
-    return DefaultDict(lambda : 0, dictionary)
+    return defaultdict(lambda : 0, dictionary)
 
 def total_smallest(files: DefaultDict[str, int], threshold: int=100_000) -> int:
     directories = du_s(files)
