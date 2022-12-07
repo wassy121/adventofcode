@@ -16,12 +16,12 @@ class Communicator:
                 self.comm_contents = line
 
     def getPacketMarker(self) -> int:
-        for i in range(4, len(self.comm_contents)+1):
-            if len({*self.comm_contents[i-4:i]}) == 4:
+        for i in range(14, len(self.comm_contents)+1):
+            if len({*self.comm_contents[i-14:i]}) == 14:
                 return i
 
 def main() -> None:
-    communicator = Communicator() #"resources/test/input.txt")
+    communicator = Communicator("resources/test/input.txt")
     mark = communicator.getPacketMarker()
     print(mark)
 
