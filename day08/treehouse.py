@@ -44,7 +44,7 @@ def ctz(v: int) -> int:
 
 def distance(bits: np.ndarray) -> int:
     # Horner's method on binary
-    v = reduce(lambda a, b: (a << 1) + b, bits.tolist(), 1) # add leading one to count zeros properly
+    v = reduce(lambda a, b: (a << 1) | b, bits.tolist(), 1) # add leading one to count zeros properly
 
     return min(ctz(v) + 1, len(bits)) # don't count boundary condition outside of grid
 
