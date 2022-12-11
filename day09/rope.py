@@ -7,7 +7,7 @@ from typing import *
 
 from more_itertools import windowed
 
-from operator import *
+from operator import add, sub 
 from math import hypot
 
 def load_vectors(input_file: str='input.txt') -> List[Tuple[str, int]]:
