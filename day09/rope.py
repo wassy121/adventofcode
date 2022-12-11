@@ -23,7 +23,7 @@ movements: Dict[str, Tuple[int, int]] = {
 
 def step(direction: str, knots: List[Tuple[int, int]], movements: Dict[str, Tuple[int, int]]=movements) -> List[Tuple[int, int]]:
     def is_touching(head: Tuple[int, int], tail: Tuple[int, int]) -> bool:
-        return hypot(*map(sub, head, tail)) < 1.5 # i.e. touching if Euclidean distance (i.e. hypotenuse ≤ √2 < 1.5 < √3 < 2)
+        return hypot(*map(sub, head, tail)) < 1.5 # i.e. touching if Euclidean distance (i.e. hypotenuse) ≤ √2 < 1.5 < √3 < 2
 
     def signum(integer: int) -> int:
         return (integer > 0) - (integer < 0)
