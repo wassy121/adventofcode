@@ -134,6 +134,7 @@ def rounds(monkeys: List[Monkey], number_rounds: int, relief: bool=True) -> List
 
 def monkey_business(monkeys: List[Monkey]) -> int:
     two_most_active = sorted([monkey.get_inspection_count() for monkey in monkeys], reverse=True)[:2]
+
     return mul(*two_most_active)
 
 def shenanigans(monkeys: List[Monkey], number_rounds: int, relief: bool=True) -> int:
