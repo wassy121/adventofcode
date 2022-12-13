@@ -9,7 +9,7 @@ from numpy.typing import NDArray
 from operator import sub
 from math import hypot
 
-from string import ascii_letters as letters
+from string import ascii_lowercase as letters
 
 from heapdict import heapdict
 
