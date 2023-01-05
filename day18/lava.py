@@ -10,7 +10,7 @@ from operator import and_
 
 from more_itertools import windowed
 
-from collections import defaultdict, deque
+from collections import deque
 
 import numpy as np
 import pandas as pd
@@ -70,7 +70,6 @@ def bubble_mask(lattice: NDArray[np.bool_]) -> NDArray[np.bool_]:
 
     return ~visited # i.e. the "bubbles"
 
-# works for any dimension lattice
 def surface_area(lattice: NDArray[np.bool_], exterior: bool=False) -> int:
     if exterior:
         lattice |= bubble_mask(lattice)
